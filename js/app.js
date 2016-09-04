@@ -18,7 +18,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     // TODO: focus purely on updating data/properties related to the object
-
+    this.x = this.x + this.speed * dt;
 
     // ctx.beginPath();
     // ctx.moveTo();
@@ -37,8 +37,9 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.sprite = 'images/char-horn-girl.png';
-    this.x = 166;
+    this.x = 202;
     this.y = 505;
+    this.speed = 50; // need to check on what is reasonable
 };
 
 // Update the player's position
@@ -57,16 +58,20 @@ Player.prototype.render = function() {
     console.log("Player render");
 };
 
-Player.prototype.handleInput = function() {
-  // TODO: fill this out
+Player.prototype.handleInput = function(k) {
+  if (k === 37)  // left
+    this.x = this.x - 101;
+  if (k === 38)  // up
+    this.x = this.y - 101;
+  if (k === 39)  // right
+    this.x = this.x + 101;
+  if (k === 40)  // down
+    this.x = this.y + 101;
 };
 
 // TODO: write checkCollisions function (where?) & uncomment in engine.js
 
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// instantiate objects
 var allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy()];
 var player = new Player();
 
