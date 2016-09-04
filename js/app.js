@@ -1,22 +1,33 @@
+var randomFactor = function() {
+  factor = Math.random();
+  return factor;
+};
+
 // Enemies our player must avoid
 var Enemy = function(x, y, sprite) {
     // Variables applied to each of our instances
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
 
-    var randomFactor = Math.random();
-    if (randomFactor < 0.33)
-      this.y = 60;  // first line of cobblestones (2nd = 150; 3rd = 230)
-    else if (randomFactor > 0.66)
-      this.y = 150;
-    else
-      this.y = 230;
+    // randomly assign a cobblestone row
+    setRow = function() {
+      randomFactor();
+      if (factor < 0.33)
+        this.y = 60;  // set to first row
+      else if (factor > 0.66)
+        this.y = 150;  // set to second row
+      else
+        this.y = 230;  // set to third row
+      return this.y;
+    };
 
+    this.y = setRow();
+
+    // set randomized speed between limits
     var Speed = function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1));
     };
-    
-    this.speed = Speed(50, 150);
+    this.speed = Speed(25, 150);
 };
 
 // TODO: figure out how to make enemies start again once headed to other side
@@ -24,9 +35,13 @@ var Enemy = function(x, y, sprite) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // TODO: focus purely on updating data/properties related to the object
+    // focus purely on updating data/properties related to the object
     this.x = this.x + this.speed * dt;
-    // this.y = this.y;
+
+    if (this.x > 505)  // reset enemy once off-screen
+      this.x = -100;
+      // this.y = new Enemy().y;  // currently causes flashing of enemies
+      // this.y = setRow();
 
     console.log("Enemy update");
     console.log(dt);
@@ -35,11 +50,10 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    // TODO: fill out anything here to do with drawing?
     console.log("Enemy render");
 };
 
-// var new_enemy = new Enemy();
+// TODO: troubleshoot visibility of player
 
 var Player = function(x, y, sprite) {
     this.sprite = 'images/char-horn-girl.png';
