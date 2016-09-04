@@ -58,35 +58,37 @@ Enemy.prototype.render = function() {
 
 var Player = function(x, y, sprite) {
     this.sprite = 'images/char-horn-girl.png';
-    this.x = 202;
-    this.y = 505;
-    this.speed = 5; // need to check on what is reasonable
+    this.x = 202;  // centered
+    this.y = 404;  // bottom row
+    // this.speed = 5; // need to check on what is reasonable
 };
 
 // Update the player's position
 // Parameter: dt, a time delta between ticks
-Player.prototype.update = function(dt) {
-    // this.x = this.x + this.speed * dt;
-    // this.y = this.y + this.speed * dt;
-
+Player.prototype.update = function(x, y) {
+    this.handleInput();
     console.log("Player update");
 };
 
 // Draw the player on the screen
 Player.prototype.render = function() {
-    // ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     console.log("Player render");
 };
 
-Player.prototype.handleInput = function(k) {
-  if (k === 37)  // left
-    this.x = this.x - 10;
-  if (k === 38)  // up
-    this.x = this.y - 10;
-  if (k === 39)  // right
-    this.x = this.x + 10;
-  if (k === 40)  // down
-    this.x = this.y + 10;
+// define actions of key inputs on player, while staying w/in game board
+Player.prototype.handleInput = function(direction) {
+  if (direction == 'left' && this.x > 100)
+    this.x = this.x - 101;
+
+  else if (direction == 'up' && this.y > -11)  // y = -11 sets player in top row
+    this.y = this.y - 83;
+
+  else if (direction == 'right' && this.x < 404)
+    this.x = this.x + 101;
+
+  else if (direction == 'down' && this.y < 404)
+    this.y = this.y + 83;
 };
 
 // TODO: write checkCollisions function (where?) & uncomment in engine.js
