@@ -5,7 +5,6 @@ var randomFactor = function() {
 
 // Enemies our player must avoid
 var Enemy = function(x, y, sprite) {
-    // Variables applied to each of our instances
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
 
@@ -30,8 +29,6 @@ var Enemy = function(x, y, sprite) {
     this.speed = Speed(25, 150);
 };
 
-// TODO: figure out how to make enemies start again once headed to other side
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -39,12 +36,16 @@ Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
 
     if (this.x > 505)  // reset enemy once off-screen
-      this.x = -100;
-      // this.y = new Enemy().y;  // currently causes flashing of enemies
-      // this.y = setRow();
+      this.reset();
 
     console.log("Enemy update");
     console.log(dt);
+};
+
+// reset location of enemy
+Enemy.prototype.reset = function() {
+    this.x = -100;
+    this.y = setRow();
 };
 
 // Draw the enemy on the screen, required method for game
