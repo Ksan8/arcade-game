@@ -1,6 +1,6 @@
 var randomFactor = function() {
-  factor = Math.random();
-  return factor;
+    factor = Math.random();
+    return factor;
 };
 
 // Enemies our player must avoid
@@ -66,7 +66,21 @@ var Player = function(x, y, sprite) {
 // Update the player's position
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function(x, y) {
+    // this.checkCollisions();
     this.handleInput();
+
+    function win() {
+      // I'd like to be able to use this, which would give an alert after 500ms
+      this.setTimeout(function() {alert("YOU WON!");}, 500);
+    }
+
+    if (this.y < 72) {
+      // win();
+      window.alert("YOU WON!");  // this doesn't work for some reason
+      this.x = 202;  // reset to starting location
+      this.y = 404;
+    }
+
     console.log("Player update");
 };
 
@@ -78,20 +92,22 @@ Player.prototype.render = function() {
 
 // define actions of key inputs on player, while staying w/in game board
 Player.prototype.handleInput = function(direction) {
-  if (direction == 'left' && this.x > 100)
-    this.x = this.x - 101;
+    if (direction == 'left' && this.x > 100)
+      this.x = this.x - 101;
 
-  else if (direction == 'up' && this.y > -11)  // y = -11 sets player in top row
-    this.y = this.y - 83;
+    else if (direction == 'up' && this.y > -11)  // y = -11 sets player in top row
+      this.y = this.y - 83;
 
-  else if (direction == 'right' && this.x < 404)
-    this.x = this.x + 101;
+    else if (direction == 'right' && this.x < 404)
+      this.x = this.x + 101;
 
-  else if (direction == 'down' && this.y < 404)
-    this.y = this.y + 83;
+    else if (direction == 'down' && this.y < 404)
+      this.y = this.y + 83;
 };
 
-// TODO: write checkCollisions function (where?) & uncomment in engine.js
+Player.prototype.checkCollisions = function() {
+    // TODO: fill in function
+};
 
 // instantiate objects
 var enemyOne = new Enemy();
