@@ -63,22 +63,26 @@ var Player = function(x, y, sprite) {
     // this.speed = 5; // need to check on what is reasonable
 };
 
+// reset location of player
+Player.prototype.reset = function() {
+    this.x = 202;  // reset to starting location
+    this.y = 404;
+};
+
+// I'd like to be able to use this, which would give an alert after 500ms
+Player.prototype.win = function() {
+    setTimeout(function() {alert("YOU WON!");}, 500);
+};
+
 // Update the player's position
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function(x, y) {
     // this.checkCollisions();
     this.handleInput();
 
-    function win() {
-      // I'd like to be able to use this, which would give an alert after 500ms
-      this.setTimeout(function() {alert("YOU WON!");}, 500);
-    }
-
     if (this.y < 72) {
-      // win();
-      window.alert("YOU WON!");  // this doesn't work for some reason
-      this.x = 202;  // reset to starting location
-      this.y = 404;
+      this.win();  // this doesn't work for some reason
+      this.reset();
     }
 
     console.log("Player update");
