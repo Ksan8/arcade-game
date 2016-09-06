@@ -3,34 +3,6 @@ var randomFactor = function() {
     return factor;
 };
 
-// var loc = function() {  // row & col info
-//     var columns = [0, 101, 202, 303, 404];
-//     var rows = [50, 133, 216, 299, 382];
-//
-//     var row, col;
-//     if (this.x < columns[1])
-//       col = 1;
-//     else if (this.x >= columns[1] && this.x < columns[2])
-//       col = 2;
-//     else if (this.x >= columns[2] && this.x < columns[3])
-//       col = 3;
-//     else if (this.x >= columns[3] && this.x < columns[4])
-//       col = 4;
-//     else
-//       col = 5;
-//
-//     if (this.y >= rows[1] && this.y < rows[2])
-//       row = 2;
-//     else if (this.y >= rows[2] && this.y < rows[3])
-//       row = 3;
-//     else if (this.y >= rows[3] && this.y < rows[4])
-//       row = 4;
-//     else
-//       row = 999;  // set to 999 bc. not concerned with rows 1, 5, or 6
-//
-//     return [col, row];
-// };
-
 // Enemies our player must avoid
 var Enemy = function(x, y, sprite) {
     this.sprite = 'images/enemy-bug.png';
@@ -61,7 +33,6 @@ var Enemy = function(x, y, sprite) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
-    // locE = loc();  // global locE so that accessible by Player update
 
     if (this.x > 505)  // reset enemy once off-screen
       this.reset();
@@ -105,7 +76,6 @@ Player.prototype.reset = function() {
     this.y = 404;
 };
 
-// I'd like to be able to use this, which would give an alert after 500ms
 Player.prototype.win = function() {
     setTimeout(function() {alert("YOU WON!");}, 500);
 };
@@ -116,13 +86,8 @@ Player.prototype.update = function(x, y) {
     this.handleInput();
     this.checkCollisions();
 
-    // var locP = loc();
-    //
-    // if (locP == locE)
-    //   this.reset();
-
     if (this.y < 72) {
-      this.win();  // this doesn't work for some reason
+      this.win();
       this.reset();
     }
 
@@ -151,18 +116,24 @@ Player.prototype.handleInput = function(direction) {
 };
 
 Player.prototype.checkCollisions = function() {
-    // var rect1 = {x: 5, y: 5, width: 50, height: 50};
-    // var rect2 = {x: 20, y: 10, width: 10, height: 10};
-
     for (e = 0; e < 4; e++) {
-      if (allEnemies[e].x < player.x + 171 &&
-        allEnemies[e].x + 171 > player.x &&
-        allEnemies[e].y < player.y + 101 &&
-        101 + allEnemies[e].y > player.y) {
+      var realEnemyX = allEnemies[e].x + 2;
+      var realEnemyY = allEnemies[e].y + 77;
+      var enemyW = 97;
+      var enemyH = 67;
+      var realPlayerX = player.x + 16;
+      var realPlayerY = player.y + 60;
+      var playerW = 68;
+      var playerH = 80;
+
+      if (realEnemyX < realPlayerX + playerW &&
+        realEnemyX + enemyW > realPlayerX &&
+        realEnemyY < realPlayerY + playerH &&
+        enemyH + realEnemyY > realPlayerY) {
         console.log("Collision!");
         player.reset();
       }
-    } 
+    }
 };
 
 // instantiate objects
