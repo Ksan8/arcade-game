@@ -47,21 +47,10 @@ Enemy.prototype.reset = function() {
     this.y = setRow();
 };
 
-// Draw the enemy on the screen, required method for game
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     console.log("Enemy render");
-};
-
-var Star = function(x, y, sprite) {
-    this.sprite = 'images/Star.png';
-    this.x = 120;
-    this.y = 30;
-};
-
-Star.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    console.log("Star render");
 };
 
 var Player = function(x, y, sprite, score) {
@@ -82,7 +71,6 @@ Player.prototype.win = function() {
 };
 
 // Update the player's position
-// Parameter: dt, a time delta between ticks
 Player.prototype.update = function(x, y) {
     this.handleInput();
     this.checkCollisions();
@@ -90,7 +78,6 @@ Player.prototype.update = function(x, y) {
     if (this.y < 72) {
       this.win();
       this.score = this.score + 1;
-      star.render();
       this.reset();
     }
 
@@ -147,7 +134,6 @@ var enemyFour = new Enemy();
 
 var allEnemies = [enemyOne, enemyTwo, enemyThree, enemyFour];
 var player = new Player();
-var star = new Star();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
