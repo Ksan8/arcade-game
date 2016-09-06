@@ -53,11 +53,12 @@ Enemy.prototype.render = function() {
     console.log("Enemy render");
 };
 
-var Player = function(x, y, sprite, score) {
+var Player = function(x, y, sprite, score, death) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 202;  // centered
     this.y = 404;  // bottom row
     this.score = 0;
+    this.death = 0;
 };
 
 // reset location of player
@@ -66,17 +67,12 @@ Player.prototype.reset = function() {
     this.y = 404;
 };
 
-Player.prototype.win = function() {
-    setTimeout(function() {alert("YOU WON!");}, 500);
-};
-
 // Update the player's position
 Player.prototype.update = function(x, y) {
     this.handleInput();
     this.checkCollisions();
 
     if (this.y < 72) {
-      this.win();
       this.score = this.score + 1;
       this.reset();
     }
@@ -121,6 +117,8 @@ Player.prototype.checkCollisions = function() {
         realEnemyY < realPlayerY + playerH &&
         enemyH + realEnemyY > realPlayerY) {
         console.log("Collision!");
+        player.score = player.score - 1;
+        player.death = player.death + 1;
         player.reset();
       }
     }
