@@ -64,10 +64,11 @@ Star.prototype.render = function() {
     console.log("Star render");
 };
 
-var Player = function(x, y, sprite) {
+var Player = function(x, y, sprite, score) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 202;  // centered
     this.y = 404;  // bottom row
+    this.score = 0;
 };
 
 // reset location of player
@@ -88,6 +89,7 @@ Player.prototype.update = function(x, y) {
 
     if (this.y < 72) {
       this.win();
+      this.score = this.score + 1;
       star.render();
       this.reset();
     }

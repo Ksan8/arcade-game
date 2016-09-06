@@ -134,6 +134,9 @@ var Engine = (function(global) {
                  */
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
+            ctx.font = "24px sans-serif";
+            ctx.fillStyle = "white";
+            ctx.fillText("Score:    " + player.score, 15, 575);
         }
 
         renderEntities();
