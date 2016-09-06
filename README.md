@@ -6,7 +6,7 @@
 A slightly more modern version of Frogger, this is a minimalist 2D game in which the object is to make it to the water without colliding into evil enemy bugs.
 
 ## Controls
-Use left-right and up-down arrow keys to move the player from block to block. Enemy collision results in death and reduced score, while reaching the water is counted toward a positive score.
+Use left-right and up-down arrow keys to move the player from block to block. Collision with enemy results in death and reduced score, while reaching the water is counted toward a positive score.
 
 ## Contributing
 This is open-source code; feel free to fork it and play around.
