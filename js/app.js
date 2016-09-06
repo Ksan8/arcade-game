@@ -3,6 +3,34 @@ var randomFactor = function() {
     return factor;
 };
 
+var loc = function() {  // row & col info
+    var columns = [0, 101, 202, 303, 404];
+    var rows = [50, 133, 216, 299, 382];
+
+    var row, col;
+    if (this.x < columns[1])
+      col = 1;
+    else if (this.x >= columns[1] && this.x < columns[2])
+      col = 2;
+    else if (this.x >= columns[2] && this.x < columns[3])
+      col = 3;
+    else if (this.x >= columns[3] && this.x < columns[4])
+      col = 4;
+    else
+      col = 5;
+
+    if (this.y >= rows[1] && this.y < rows[2])
+      row = 2;
+    else if (this.y >= rows[2] && this.y < rows[3])
+      row = 3;
+    else if (this.y >= rows[3] && this.y < rows[4])
+      row = 4;
+    else
+      row = 999;  // set to 999 bc. not concerned with rows 1, 5, or 6
+
+    return [col, row];
+};
+
 // Enemies our player must avoid
 var Enemy = function(x, y, sprite) {
     this.sprite = 'images/enemy-bug.png';
@@ -32,8 +60,8 @@ var Enemy = function(x, y, sprite) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // focus purely on updating data/properties related to the object
     this.x = this.x + this.speed * dt;
+    locE = loc();  // global locE so that accessible by Player update
 
     if (this.x > 505)  // reset enemy once off-screen
       this.reset();
@@ -54,13 +82,21 @@ Enemy.prototype.render = function() {
     console.log("Enemy render");
 };
 
-// TODO: troubleshoot visibility of player
+// var Star = function(x, y, sprite) {
+//     this.sprite = 'images/Star.png';
+//     this.x = 150;
+//     this.y = 50;
+// };
+//
+// Star.prototype.render = function() {
+//     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+//     console.log("Star render");
+// };
 
 var Player = function(x, y, sprite) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 202;  // centered
     this.y = 404;  // bottom row
-    // this.speed = 5; // need to check on what is reasonable
 };
 
 // reset location of player
@@ -79,6 +115,11 @@ Player.prototype.win = function() {
 Player.prototype.update = function(x, y) {
     // this.checkCollisions();
     this.handleInput();
+
+    var locP = loc();
+
+    if (locP == locE)
+      this.reset();
 
     if (this.y < 72) {
       this.win();  // this doesn't work for some reason
@@ -109,9 +150,9 @@ Player.prototype.handleInput = function(direction) {
       this.y = this.y + 83;
 };
 
-Player.prototype.checkCollisions = function() {
-    // TODO: fill in function
-};
+// Player.prototype.checkCollisions = function() {
+//     // TODO: fill in function
+// };
 
 // instantiate objects
 var enemyOne = new Enemy();
