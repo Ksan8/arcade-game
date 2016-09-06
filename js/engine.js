@@ -184,6 +184,7 @@ var Engine = (function(global) {
         'images/Rock.png',
         'images/Selector.png',
         'images/Star.png',
+        'images/footer_lodyas.png'
     ]);
     Resources.onReady(init);
 

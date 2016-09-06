@@ -53,16 +53,16 @@ Enemy.prototype.render = function() {
     console.log("Enemy render");
 };
 
-// var Star = function(x, y, sprite) {
-//     this.sprite = 'images/Star.png';
-//     this.x = 150;
-//     this.y = 50;
-// };
-//
-// Star.prototype.render = function() {
-//     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-//     console.log("Star render");
-// };
+var Star = function(x, y, sprite) {
+    this.sprite = 'images/Star.png';
+    this.x = 120;
+    this.y = 30;
+};
+
+Star.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    console.log("Star render");
+};
 
 var Player = function(x, y, sprite) {
     this.sprite = 'images/char-horn-girl.png';
@@ -88,6 +88,7 @@ Player.prototype.update = function(x, y) {
 
     if (this.y < 72) {
       this.win();
+      star.render();
       this.reset();
     }
 
@@ -144,6 +145,7 @@ var enemyFour = new Enemy();
 
 var allEnemies = [enemyOne, enemyTwo, enemyThree, enemyFour];
 var player = new Player();
+var star = new Star();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
