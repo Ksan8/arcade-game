@@ -29,7 +29,7 @@ var Enemy = function(x, y, sprite) {
     this.speed = Speed(25, 150);
 };
 
-// Update the enemy's position, required method for game
+// Update the enemy's position
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
@@ -53,6 +53,7 @@ Enemy.prototype.render = function() {
     console.log("Enemy render");
 };
 
+// Player object
 var Player = function(x, y, sprite, score, death) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 202;  // centered
@@ -72,6 +73,7 @@ Player.prototype.update = function(x, y) {
     this.handleInput();
     this.checkCollisions();
 
+    // if player reaches water, add 1 to score and reset location
     if (this.y < 72) {
       this.score = this.score + 1;
       this.reset();
@@ -101,8 +103,10 @@ Player.prototype.handleInput = function(direction) {
       this.y = this.y + 83;
 };
 
+// collision detection function
 Player.prototype.checkCollisions = function() {
     for (e = 0; e < 4; e++) {
+      // new variables based on actual edges of player and enemy icons
       var realEnemyX = allEnemies[e].x + 2;
       var realEnemyY = allEnemies[e].y + 77;
       var enemyW = 97;
@@ -112,6 +116,7 @@ Player.prototype.checkCollisions = function() {
       var playerW = 68;
       var playerH = 80;
 
+      // in case of player/enemy overlap, player 'dies' and score goes down by 1
       if (realEnemyX < realPlayerX + playerW &&
         realEnemyX + enemyW > realPlayerX &&
         realEnemyY < realPlayerY + playerH &&
