@@ -3,33 +3,33 @@ var randomFactor = function() {
     return factor;
 };
 
-var loc = function() {  // row & col info
-    var columns = [0, 101, 202, 303, 404];
-    var rows = [50, 133, 216, 299, 382];
-
-    var row, col;
-    if (this.x < columns[1])
-      col = 1;
-    else if (this.x >= columns[1] && this.x < columns[2])
-      col = 2;
-    else if (this.x >= columns[2] && this.x < columns[3])
-      col = 3;
-    else if (this.x >= columns[3] && this.x < columns[4])
-      col = 4;
-    else
-      col = 5;
-
-    if (this.y >= rows[1] && this.y < rows[2])
-      row = 2;
-    else if (this.y >= rows[2] && this.y < rows[3])
-      row = 3;
-    else if (this.y >= rows[3] && this.y < rows[4])
-      row = 4;
-    else
-      row = 999;  // set to 999 bc. not concerned with rows 1, 5, or 6
-
-    return [col, row];
-};
+// var loc = function() {  // row & col info
+//     var columns = [0, 101, 202, 303, 404];
+//     var rows = [50, 133, 216, 299, 382];
+//
+//     var row, col;
+//     if (this.x < columns[1])
+//       col = 1;
+//     else if (this.x >= columns[1] && this.x < columns[2])
+//       col = 2;
+//     else if (this.x >= columns[2] && this.x < columns[3])
+//       col = 3;
+//     else if (this.x >= columns[3] && this.x < columns[4])
+//       col = 4;
+//     else
+//       col = 5;
+//
+//     if (this.y >= rows[1] && this.y < rows[2])
+//       row = 2;
+//     else if (this.y >= rows[2] && this.y < rows[3])
+//       row = 3;
+//     else if (this.y >= rows[3] && this.y < rows[4])
+//       row = 4;
+//     else
+//       row = 999;  // set to 999 bc. not concerned with rows 1, 5, or 6
+//
+//     return [col, row];
+// };
 
 // Enemies our player must avoid
 var Enemy = function(x, y, sprite) {
@@ -61,7 +61,7 @@ var Enemy = function(x, y, sprite) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
-    locE = loc();  // global locE so that accessible by Player update
+    // locE = loc();  // global locE so that accessible by Player update
 
     if (this.x > 505)  // reset enemy once off-screen
       this.reset();
@@ -113,13 +113,13 @@ Player.prototype.win = function() {
 // Update the player's position
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function(x, y) {
-    // this.checkCollisions();
     this.handleInput();
+    this.checkCollisions();
 
-    var locP = loc();
-
-    if (locP == locE)
-      this.reset();
+    // var locP = loc();
+    //
+    // if (locP == locE)
+    //   this.reset();
 
     if (this.y < 72) {
       this.win();  // this doesn't work for some reason
@@ -150,9 +150,20 @@ Player.prototype.handleInput = function(direction) {
       this.y = this.y + 83;
 };
 
-// Player.prototype.checkCollisions = function() {
-//     // TODO: fill in function
-// };
+Player.prototype.checkCollisions = function() {
+    // var rect1 = {x: 5, y: 5, width: 50, height: 50};
+    // var rect2 = {x: 20, y: 10, width: 10, height: 10};
+
+    for (e = 0; e < 4; e++) {
+      if (allEnemies[e].x < player.x + 171 &&
+        allEnemies[e].x + 171 > player.x &&
+        allEnemies[e].y < player.y + 101 &&
+        101 + allEnemies[e].y > player.y) {
+        console.log("Collision!");
+        player.reset();
+      }
+    } 
+};
 
 // instantiate objects
 var enemyOne = new Enemy();
