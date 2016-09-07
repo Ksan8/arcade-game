@@ -1,5 +1,6 @@
 var randomFactor = function() {
-    factor = Math.random();
+    "use strict";
+    window.factor = Math.random();
     return factor;
 };
 
@@ -111,8 +112,8 @@ Player.prototype.checkCollisions = function() {
       var realEnemyY = allEnemies[e].y + 77;
       var enemyW = 97;
       var enemyH = 67;
-      var realPlayerX = player.x + 16;
-      var realPlayerY = player.y + 60;
+      var realPlayerX = this.x + 16;
+      var realPlayerY = this.y + 60;
       var playerW = 68;
       var playerH = 80;
 
@@ -122,9 +123,9 @@ Player.prototype.checkCollisions = function() {
         realEnemyY < realPlayerY + playerH &&
         enemyH + realEnemyY > realPlayerY) {
         console.log("Collision!");
-        player.score = player.score - 1;
-        player.death = player.death + 1;
-        player.reset();
+        this.score = this.score - 1;
+        this.death = this.death + 1;
+        this.reset();
       }
     }
 };
