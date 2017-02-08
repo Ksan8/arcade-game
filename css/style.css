@@ -1,6 +1,5 @@
 body {
     text-align: center;
-    /*background-color: grey;*/
-    background-image: url('images/footer_lodyas.png');
-    background-size: cover;
+    background-image: url('../images/footer_lodyas.png');
+    background-size: 100% 100%;
 }

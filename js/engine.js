@@ -136,7 +136,7 @@ var Engine = (function(global) {
             }
             ctx.font = "24px sans-serif";
             ctx.fillStyle = "white";
-            ctx.fillText("Score:    " + player.score, 15, 575);
+            ctx.fillText("Score:    " + player.score + "             Deaths:   " + player.death, 15, 575);
         }
 
         renderEntities();

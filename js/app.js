@@ -1,3 +1,7 @@
+/**
+  * enter header comment here
+  */
+
 var randomFactor = function() {
     "use strict";
     window.factor = Math.random();
