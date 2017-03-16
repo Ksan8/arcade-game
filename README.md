@@ -1,6 +1,6 @@
 ## Replica of classic arcade game Frogger
 
-<img src="https://github.com/Ksan8/arcade-game/blob/master/images/frogger-screenshot.png" style="border: 1px solid #646464; display: block; margin: 0px auto;">
+![Frogger screenshot](./frogger-screenshot.png)
 
 ## Description
 This was completed as a project within [Udacity](https://www.udacity.com/)'s  [Front-End Web Developer Nanodegree](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001?v=fe1) program.
